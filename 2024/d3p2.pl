@@ -1,4 +1,3 @@
-:- use_module(library(filesex)).
 
 
 isDo(String) :-
