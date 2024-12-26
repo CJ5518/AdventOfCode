@@ -19,6 +19,7 @@ function boards:new(filename)
 	end
 	ret.width = #ret.board[1];
 	ret.height = #ret.board;
+	file:close();
 	return ret;
 end
 
