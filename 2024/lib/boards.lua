@@ -60,7 +60,7 @@ end
 function boards:forAll(func)
 	for y = 1, self.height do
 		for x = 1, self.width do
-			func(self,x,y);
+			func(self,x,y,self:getElement(x,y));
 		end
 	end
 end
