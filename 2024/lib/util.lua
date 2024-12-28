@@ -3,6 +3,12 @@
 function printf(s, ...)
 	print(string.format(s, ...));
 end
+function errorf(s, ...)
+	local tab = {...};
+	local level = tab[#tab];
+	tab[#tab] = nil;
+	error(string.format(s, unpack(tab)), level);
+end
 
 --Will definitely crash on a cyclic table
 function cloneTable(tab)
@@ -16,4 +22,21 @@ function cloneTable(tab)
 		end
 	end
 	return ret;
+end
+
+function typeCheck(...)
+	local tab = {...};
+	for q = 1, #tab, 2 do
+		local item = tab[q];
+		local wantedType = tab[q + 1];
+		if type(item) ~= wantedType then
+			errorf("Error in function %s, bad argument #%d, expected %s but got %s",
+			debug.getinfo(2,"n").name,
+			(q + 1) / 2,
+			wantedType,
+			type(item),
+			4
+		);
+		end
+	end
 end

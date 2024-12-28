@@ -24,23 +24,29 @@ function boards:new(filename)
 end
 
 function boards:getElement(x,y)
+	typeCheck(x, "number", y, "number");
 	return self.board[y][x];
 end
 function boards:getElementVec(vec)
-	return self:getElement(vec.x, vec.y);
+	typeCheck(vec, "table");
+	return self.board[vec.y][vec.x];
 end
 
 function boards:setElement(x,y, value)
+	typeCheck(x, "number", y, "number");
 	self.board[y][x] = value;
 end
 function boards:setElementVec(vec, value)
+	typeCheck(vec, "table");
 	return self:setElement(vec.x, vec.y, value);
 end
 
 function boards:inBounds(x,y)
+	typeCheck(x, "number", y, "number");
 	return self.board[y] and self.board[y][x];
 end
 function boards:inBoundsVec(v)
+	typeCheck(v, "table");
 	return self:inBounds(v.x, v.y);
 end
 
