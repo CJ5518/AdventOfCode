@@ -1,4 +1,5 @@
 require("lib.util");
+local Vector2 = require("lib.Vector2");
 
 local boards = {};
 boards.__index = boards;
@@ -48,6 +49,29 @@ end
 function boards:inBoundsVec(v)
 	typeCheck(v, "table");
 	return self:inBounds(v.x, v.y);
+end
+
+--Gets the 4 neighbors arround a position, only the ones that are in bounds
+--returns an array of vector 2s
+function boards:_getNeighborsVecInternal(vec, all)
+	typeCheck(vec, "table");
+	local ret = {};
+	local function addPos(pos)
+		if all or self:inBoundsVec(pos) then
+			ret[#ret+1] = pos;
+		end
+	end
+	addPos(vec + Vector2:new(1,0));
+	addPos(vec + Vector2:new(-1,0));
+	addPos(vec + Vector2:new(0,1));
+	addPos(vec + Vector2:new(0,-1));
+	return ret;
+end
+function boards:getNeighborsVec(vec)
+	return self:_getNeighborsVecInternal(vec, false);
+end
+function boards:getAllNeighborsVec(vec)
+	return self:_getNeighborsVecInternal(vec, true);
 end
 
 function boards:print()
